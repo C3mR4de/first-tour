@@ -25,8 +25,10 @@ int main()
 
     std::ifstream file("17.txt");
 
+    constexpr std::size_t size = 333;
+
     std::vector<std::size_t> nums;
-    nums.reserve(333);
+    nums.reserve(size);
 
     using input_it = std::istream_iterator<std::size_t>;
     std::copy(input_it(file), input_it(), std::back_inserter(nums));
@@ -34,13 +36,13 @@ int main()
     std::size_t count = 0;
     std::size_t max = 0;
 
-    for (std::size_t i = 0; i < 333; ++i)
+    for (std::size_t i = 0; i < size; ++i)
     {
-        for (std::size_t j = i + 1; j < 333; ++j)
+        for (std::size_t j = i + 1; j < size; ++j)
         {
-            for (std::size_t k = j + 1; k < 333; ++k)
+            for (std::size_t k = j + 1; k < size; ++k)
             {
-                for (std::size_t l = k + 1; l < 333; ++l)
+                for (std::size_t l = k + 1; l < size; ++l)
                 {
                     std::set<std::size_t> vals = {nums[i], nums[j], nums[k], nums[l]};
 
