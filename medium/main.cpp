@@ -6,10 +6,10 @@ int main()
 {
     std::ifstream file("17.txt");
 
-    std::vector<int> nums;
+    std::vector<std::size_t> nums;
     nums.reserve(100000);
 
-    using input_it = std::istream_iterator<int>;
+    using input_it = std::istream_iterator<std::size_t>;
     std::copy(input_it(file), input_it(), std::back_inserter(nums));
 
     std::size_t count = 0;
@@ -22,7 +22,7 @@ int main()
             if ((nums[i] + nums[j]) % 10 == 9)
             {
                 ++count;
-                min = std::min<std::size_t>(min, nums[i] + nums[j]);
+                min = std::min(min, nums[i] + nums[j]);
             }
         }
     }
