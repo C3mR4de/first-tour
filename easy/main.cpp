@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <numeric>
 #include <vector>
 #include <algorithm>
 #include <iterator>
@@ -8,35 +9,18 @@ int main()
 {
     std::ifstream file("17.txt");
 
-    std::vector<int> nums;
-    nums.reserve(100000);
+    std::vector<std::size_t> nums;
+    nums.reserve(10000001);
 
-    using input_it = std::istream_iterator<int>;
-    std::copy(input_it(file), input_it(), std::back_inserter(nums));
-
-    std::size_t count = 0;
-    int max = -100000;
-
-    for (std::size_t i = 0; i < nums.size() - 2; ++i)
+    using input_it = std::istream_iterator<std::size_t>;
+    std::size_t res = std::accumulate(input_it(file), input_it(), 0, [&nums](std::size_t lhs, std::size_t rhs)
     {
-        if (nums[i] + nums[i + 1] == nums[i + 2])
-        {
-            ++count;
-            max = std::max(max, nums[i + 2]);
-        }
-        else if (nums[i + 1] + nums[i + 2] == nums[i])
-        {
-            ++count;
-            max = std::max(max, nums[i]);
-        }
-        else if (nums[i] + nums[i + 2] == nums[i + 1])
-        {
-            ++count;
-            max = std::max(max, nums[i + 1]);
-        }
-    }
+        nums.push_back(rhs);
+        return lhs ^ rhs;
+    });
 
-    std::cout << count << ' ' << max << '\n';
+    std::size_t pos = std::distance(nums.cbegin(), std::find(nums.cbegin(), nums.cend(), res)) + 1;
+    std::cout << res << ' ' << pos << '\n';
 
     return 0;
 }
